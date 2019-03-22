@@ -1,3 +1,11 @@
+//definition of tree.hh file. A simple recursive data structure to hold keys and values.
+#include "htree.hh"
+#include <memory>
+#include <list>
+#include <iostream>
+#include <assert.h>
+
+
 // Initialize with a key and a value:
 HTree::HTree(int key,
       uint64_t value,
@@ -28,29 +36,26 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
 }
 
 bool HTree::inTree(int key) const {
-        if(this->key_ == key)      return true;
+        if(key_ == key)      return true;
         
-        if(this ->left_ ){
-                if(inTree(key))    return inTree(key);
+        if(left_ ){
+                if(left_ ->inTree(key))    return left_ -> inTree(key);
         }
-        if(this ->right_){
-                if(inTree(key))    return inTree(key);
+        if(right_){
+                if(right_ ->inTree(key))    return right_ -> inTree(key);
         }
         return false;
 }
 
-// Return a list of directions from root to a node of a given key.
-// Crashes (with an assert) if key not contained in this tree
-HTree::path_t HTree::path_to(int key) const{
-    path_t path = {};
-    if(inTree(key)){
-        if(left_ && left_ -> inTree(key)){
+HTree::path_t HTree::path_maker(int key, HTree::path_t path)const {
+ if(inTree(key)){
+        if(left_ && left_ -> inTree(key)){ 
             path.push_back(Direction::LEFT);
-            return this ->left_ -> path_to(key);
+            return left_ -> path_maker(key, path);
         }
         else if(right_ && right_ -> inTree( key)){
             path.push_back(Direction::RIGHT);
-            return this ->right_ -> path_to(key);
+            return right_ -> path_maker(key, path);
         }
         else if(key_ == key){
             return path;
@@ -60,15 +65,24 @@ HTree::path_t HTree::path_to(int key) const{
 
     else{std::cout << "not in tree" << std::endl; assert(false);}
 }
+// Return a list of directions from root to a node of a given key.
+// Crashes (with an assert) if key not contained in this tree
+HTree::path_t HTree::path_to(int key) const{
+    HTree::path_t path = {};
+    path = path_maker(key, path);
+    return path;
+}
 
-//turns a list into a string for easy printing
 std::string toString(HTree::path_t path){
     std::string pathStr = "";
     for(auto i : path){
-        if( i == HTree::Direction::RIGHT)   pathStr += "R";
-        if( i == HTree::Direction::LEFT)    pathStr += "L";
+        if( i == HTree::Direction::LEFT){    
+            pathStr += "L";
+        }
+        if( i == HTree::Direction::RIGHT){
+            pathStr += "R";
+        }   
     }
     return pathStr;
 }
-
 
