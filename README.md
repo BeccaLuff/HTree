@@ -23,11 +23,6 @@ run test_hforest
 * **Becca Luff** - *Initial work* - [BeccaLuff](https://github.com/BeccaLuff)
 * **Devin Arrants** - *Initial work* - [DevinArrants](https://github.com/DevinArrants)
 
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
