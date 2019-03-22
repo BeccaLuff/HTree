@@ -2,11 +2,11 @@
  * HTree: a class to represent a tree node with two values: a key
  * and a value.
  */
-
 #pragma once
 
 #include <memory>
 #include <list>
+#include <iostream>
 
 class HTree {
  public:
@@ -27,13 +27,18 @@ class HTree {
   // Return the child of this node indicated by dir.
   // If the child is nullptr (current node is a leaf), returns nullptr.
   tree_ptr_t get_child(Direction dir) const;
-
   // Return a list of directions from root to a node of a given key.
   // Crashes (with an assert) if key not contained in this tree
   path_t path_to(int key) const;
+
  private:
   int key_;
   uint64_t value_;
   tree_ptr_t left_;
-  tree_ptr_t right_;
+  tree_ptr_t right_;//helper function to see if a key is in a tree
+  bool inTree(key_t key) const;
+  HTree::path_t path_maker(int key, path_t path) const;
 };
+  //make a list a string for easy printing
+  std::string toString(HTree::path_t path);
+
