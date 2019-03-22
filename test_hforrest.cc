@@ -119,7 +119,7 @@ void testTrees1(){
     auto leaf33(std::make_shared<const HTree>(400,0,nullptr,nullptr));
     auto leaf44(std::make_shared<const HTree>(5,0,leaf11,nullptr));
     auto leaf55(std::make_shared<const HTree>(6,0,leaf33,leaf44));
-    auto leaf66(std::make_shared<const HTree>(9,0,leaf2,nullptr));
+    auto leaf66(std::make_shared<const HTree>(9,0,leaf22,nullptr));
     auto tree2(std::make_shared<const HTree>(10,0,leaf55,leaf66));    
     
     HForest hforrest_;
