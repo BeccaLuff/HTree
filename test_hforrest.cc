@@ -2,6 +2,7 @@
 #include "hforest.hh"
 #include <assert.h>
 #include <iostream>
+#include <vector>
 
 void test0(){ //test tree in HW6
     auto leaf1(std::make_shared<const HTree>(9,0,nullptr,nullptr));
@@ -59,29 +60,29 @@ void test2(){
 
 //trees of one with different root nodes
 void testTrees0(){
-    auto leaf1(std::make_shared<const HTree>(9,0,nullptr,nullptr));
-    auto leaf2(std::make_shared<const HTree>(3,0,nullptr,nullptr));
-    auto leaf3(std::make_shared<const HTree>(12,0,nullptr,nullptr));
-    auto leaf4(std::make_shared<const HTree>(6,0,leaf1,nullptr));
-    auto leaf5(std::make_shared<const HTree>(-5,0,leaf3,leaf4));
-    auto leaf6(std::make_shared<const HTree>(12,0,leaf2,nullptr));
-    auto tree0(std::make_shared<const HTree>(126,0,leaf5,leaf6));
+    auto leaf1(std::make_shared<const HTree>(9,9,nullptr,nullptr));
+    auto leaf2(std::make_shared<const HTree>(3,3,nullptr,nullptr));
+    auto leaf3(std::make_shared<const HTree>(12,12,nullptr,nullptr));
+    auto leaf4(std::make_shared<const HTree>(6,6,leaf1,nullptr));
+    auto leaf5(std::make_shared<const HTree>(-5,-5,leaf3,leaf4));
+    auto leaf6(std::make_shared<const HTree>(12,12,leaf2,nullptr));
+    auto tree0(std::make_shared<const HTree>(126,126,leaf5,leaf6));
     
-    auto leaf11(std::make_shared<const HTree>(9,0,nullptr,nullptr));
-    auto leaf22(std::make_shared<const HTree>(3,0,nullptr,nullptr));
-    auto leaf33(std::make_shared<const HTree>(12,0,nullptr,nullptr));
-    auto leaf44(std::make_shared<const HTree>(6,0,leaf11,nullptr));
-    auto leaf55(std::make_shared<const HTree>(-5,0,leaf33,leaf44));
-    auto leaf66(std::make_shared<const HTree>(12,0,leaf22,nullptr));
-    auto tree1(std::make_shared<const HTree>(1,0,leaf55,leaf66));
+    auto leaf11(std::make_shared<const HTree>(9,9,nullptr,nullptr));
+    auto leaf22(std::make_shared<const HTree>(3,3,nullptr,nullptr));
+    auto leaf33(std::make_shared<const HTree>(12,12,nullptr,nullptr));
+    auto leaf44(std::make_shared<const HTree>(6,6,leaf11,nullptr));
+    auto leaf55(std::make_shared<const HTree>(-5,-5,leaf33,leaf44));
+    auto leaf66(std::make_shared<const HTree>(12,12,leaf22,nullptr));
+    auto tree1(std::make_shared<const HTree>(1,1,leaf55,leaf66));
     
-    auto leaf111(std::make_shared<const HTree>(9,0,nullptr,nullptr));
-    auto leaf222(std::make_shared<const HTree>(3,0,nullptr,nullptr));
-    auto leaf333(std::make_shared<const HTree>(12,0,nullptr,nullptr));
-    auto leaf444(std::make_shared<const HTree>(6,0,leaf111,nullptr));
-    auto leaf555(std::make_shared<const HTree>(-5,0,leaf333,leaf444));
-    auto leaf666(std::make_shared<const HTree>(12,0,leaf222,nullptr));
-    auto tree2(std::make_shared<const HTree>(200,0,leaf555,leaf666));
+    auto leaf111(std::make_shared<const HTree>(9,9,nullptr,nullptr));
+    auto leaf222(std::make_shared<const HTree>(3,3,nullptr,nullptr));
+    auto leaf333(std::make_shared<const HTree>(12,12,nullptr,nullptr));
+    auto leaf444(std::make_shared<const HTree>(6,6,leaf111,nullptr));
+    auto leaf555(std::make_shared<const HTree>(-5,-5,leaf333,leaf444));
+    auto leaf666(std::make_shared<const HTree>(12,12,leaf222,nullptr));
+    auto tree2(std::make_shared<const HTree>(200,200,leaf555,leaf666));
     
     HForest hforrest_;
     
@@ -99,10 +100,28 @@ void testTrees0(){
     assert(hforrest_.size() == 1);
     assert(hforrest_.pop_tree() == tree1);
     assert(hforrest_.size() == 0);
+    assert(hforrest_.pop_tree() == nullptr); //check that pop on empty tree returns nullptr
+   
+    //test if order added changed anything
+    hforrest_.add_tree(tree2);
+    hforrest_.add_tree(tree1);
+    hforrest_.add_tree(tree0);
+    hforrest_.pop_tree();
+    assert(hforrest_.pop_tree() == tree2);
+    assert(hforrest_.pop_tree() == tree0);
+    assert(hforrest_.pop_tree() == tree1);
+ /*
+    hforrest_.add_tree(tree2);
+    hforrest_.add_tree(tree0);
+    hforrest_.add_tree(tree1);
+    assert(hforrest_.pop_tree() == tree2);
+    assert(hforrest_.pop_tree() == tree0);
+    assert(hforrest_.pop_tree() == tree1);
+*/
 
     std::cout << "Correct" << std::endl;	
 }
-
+/*
 void testTrees1(){
     auto tree0(std::make_shared<const HTree>(5, 0, nullptr, nullptr));
 
@@ -153,13 +172,13 @@ void testTrees1(){
     assert(hforrest_.pop_tree() == tree1);
 
     std::cout << "Correct" << std::endl;
-}
+}*/
 
 int main(){
     test0();
     test1();
     test2();
     testTrees0();
-    testTrees1();
+   // testTrees1();   //REMEMBER TO VALGRIND
     return 0;
 }
