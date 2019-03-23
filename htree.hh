@@ -35,9 +35,9 @@ class HTree {
   int key_;
   uint64_t value_;
   tree_ptr_t left_;
-  tree_ptr_t right_;//helper function to see if a key is in a tree
-  bool inTree(key_t key) const;
-  HTree::path_t path_maker(int key, path_t path) const;
+  tree_ptr_t right_;
+  bool inTree(key_t key) const; //helper function to check if a key is in a tree
+  HTree::path_t path_maker(int key, path_t path) const;  //makes the path for path_to
 };
   //make a list a string for easy printing
   std::string toString(HTree::path_t path);

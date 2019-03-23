@@ -1,7 +1,11 @@
-#include "hforest.hh"
+//implementation for the HForest Class
 
+#include "hforest.hh"
+#include <algorithm>
+
+//this function creates heap in an ordered manner such that the first element is the largest
 bool compare_trees(HTree::tree_ptr_t t1, HTree::tree_ptr_t t2){
-return t1->get_value() < t2->get_value();
+    return t1->get_value() < t2->get_value();
 }
 
 //Constructs a Forest of size 0
@@ -9,16 +13,21 @@ HForest::HForest(){
     std::vector<HTree::tree_ptr_t> trees_ {};
 }
 
+//Destructor
 HForest::~HForest(){}
 
+//Returns size
 int HForest::size() const{return trees_.size();}
 
-void HForest::add_tree(HTree::tree_ptr_t tree){trees_.push_back(tree);} //Adds tree to back of vector
+//adds a tree to forrest and to the heap 
+void HForest::add_tree(HTree::tree_ptr_t tree){trees_.push_back(tree); //adds tree to back of vector
+	std::push_heap(trees_.begin(), trees_.end(), compare_trees);} //add to heap in ordered manner
 
+//pops largest tree off the heap and returns it to the user
 HTree::tree_ptr_t HForest::pop_tree(){
-    std::make_heap(trees_.begin(),trees_.end(),compare_trees); //Orders trees
-    std::pop_heap(trees_.begin(),trees_.end(),compare_trees); // moves largest tree to back
-    HTree::tree_ptr_t largestTree = trees_.back();           // Saves a pointer to largest tree
-    trees_.pop_back();                                       // Actually removes the tree
-    return largestTree;
+    if(trees_.empty())		return nullptr; //check if tree is empty first
+    HTree::tree_ptr_t largest = trees_.front();	
+    std::pop_heap(trees_.begin(), trees_.end(), compare_trees); //pop greatest value ofof
+    trees_.pop_back();
+    return largest;
 }

@@ -35,6 +35,7 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
     return nullptr;
 }
 
+//checks if a key is in a tree
 bool HTree::inTree(int key) const {
         if(key_ == key)      return true;
         
@@ -47,19 +48,25 @@ bool HTree::inTree(int key) const {
         return false;
 }
 
+//function that makes the path that path_to will call
+//useful because I can call recursively 
 HTree::path_t HTree::path_maker(int key, HTree::path_t path)const {
- if(inTree(key)){
-        if(left_ && left_ -> inTree(key)){ 
+ if(inTree(key)){   //check if the key is in the tree
+        //Check left first to ensure leftmost key is chosen in path_to
+	if(left_ && left_ -> inTree(key)){   
             path.push_back(Direction::LEFT);
-            return left_ -> path_maker(key, path);
+            return left_ -> path_maker(key, path);  //reccursively call path_maker on left side of tree
         }
+
         else if(right_ && right_ -> inTree( key)){
             path.push_back(Direction::RIGHT);
-            return right_ -> path_maker(key, path);
+            return right_ -> path_maker(key, path);  //reccursively call path_maker on right side of tree
         }
+
         else if(key_ == key){
             return path;
         }
+
         return path;
     }
 
@@ -73,6 +80,7 @@ HTree::path_t HTree::path_to(int key) const{
     return path;
 }
 
+//makes a path a string for debugging purposes
 std::string toString(HTree::path_t path){
     std::string pathStr = "";
     for(auto i : path){
