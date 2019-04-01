@@ -6,7 +6,7 @@ HForest is a collection of independent HTrees where each HTree in the collection
 
 ## Getting Started
 
-Download the HTree file, Unzip it and place it somewhere easy to get to from your terminal
+Download the HTree files, Unzip it and place it somewhere easy to get to from your terminal
 
 ### Prerequisites
 
@@ -14,9 +14,7 @@ An basic understanding of using terminal
 
 ### Installing and Building
 
-Download the files
-Use make file to compile
-run test_hforest (tests HTrees as well)
+#Download the files, use make file to compile, run test_hforest (tests HTrees as well)
 
 ## Design Choices
 The majority of design choices in HForest are self explanatory; however, two functions need more discussion,
