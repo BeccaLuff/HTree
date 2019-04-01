@@ -18,7 +18,7 @@ An basic understanding of using terminal
 
 ## Design Choices
 The majority of design choices in HForest are self explanatory; however, two functions need more discussion,
-specifically the add_tree and pop_tree functions. Instead of doing make_heap with the comparison in pop_heap,
+specifically the add_tree and pop_tree functions. Instead of doing make_heap with the comparison in pop_tree,
 we used push_heap with the comparison after adding the tree in add_tree to create the heap in descending order. 
 This simplifies the pop_tree functions so one does not need to make a heap and pop from the heap. We did this 
 because we couldn't get make_heap to work as expected. 
